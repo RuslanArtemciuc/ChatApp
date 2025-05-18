@@ -163,8 +163,8 @@ In `ws-server/files/ws.php`:
 
 1. **Setup:** Binds TCP socket on `0.0.0.0:8080`.
 2. **Handshake:** Validates `user_id` and `token` against `tokens` table.
-3. **Loop:** Uses `stream_select()` to multiplex and broadcast messages to both chat participants.
-4. **Frame Handling:** RFC6455 helpers `readFrame()`/`sendFrame()`.
+3. **Loop:** Uses `socket_select()` to manage each socket in a always running loop.
+4. **Frame Handling:** Helpers `readFrame()`/`sendFrame()` to easily compose and receive new frames.
 
 ---
 
