@@ -1,0 +1,33 @@
+services:
+  db:
+    build: ./db
+    container_name: chat_db
+    ports:
+      - "8083:3306"
+    networks:
+      - ws-net
+
+  ws-server:
+    build: ./ws-server
+    container_name: php_ws_server
+    depends_on:
+      - db
+    ports:
+      - "8082:8080"
+    networks:
+      - ws-net
+
+  web:
+    build: ./web
+    container_name: apache_web
+    depends_on:
+      - ws-server
+      - db
+    ports:
+      - "80:80"
+    networks:
+      - ws-net
+
+networks:
+  ws-net:
+    driver: bridge
